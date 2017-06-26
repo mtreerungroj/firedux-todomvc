@@ -1,22 +1,30 @@
 import Firedux from 'firedux'
 import firebase from 'firebase'
 
-let session = (() => {
-  const match = (window.location.search || '').match(/s=([^&]*)/)
-  return match ? match[1] : null
-})()
-
-session = session ? session : (() => {
-  return (new Date()).getTime() + '-' + Math.floor((Math.random()*100000))
-})()
-
 const firebaseApp = firebase.initializeApp({
-  databaseURL: 'https://firedux-todomvc.firebaseio.com'
+  apiKey: "AIzaSyA3iSHbBSRBMGCvxsmHzQWG296s0j0vcCo",
+  authDomain: "quizchatbot-ce222.firebaseapp.com",
+  databaseURL: 'https://quizchatbot-ce222.firebaseio.com'
 })
 
-const rootRef = firebaseApp.database().ref()
+/*let user = "foo" new Promise((resolve, reject) => {
+  return firebaseApp.auth().onAuthStateChanged((user) => {
+    if (user) {
+      resolve({ uid: user.uid })
+    }
+  })
+})
+console.log("user=", user)
+*/
 
-const ref = rootRef.child(`sessions/${session}`)
+// uid = uid ? uid : (() => {
+//   return (new Date()).getTime() + '-' + Math.floor((Math.random() * 100000))
+// })()
+
+
+const ref = firebaseApp.database().ref()
+
+// const ref = rootRef.child(`users/`)
 
 const firedux = new Firedux({
   ref
