@@ -4,23 +4,20 @@ import store from '../store'
 
 class HeaderQuiz extends Component {
   handleSave(quiz) {
-    if (quiz) {
-      this.props.addQuiz(quiz)
-    }
+    this.props.addQuiz(quiz)
   }
 
   render() {
     return (
       <header className="header">
         <h1>Quiz Chatbot</h1>
-        <QuizTextInput newQuiz
-          onSave={this.handleSave.bind(this)}
-          placeholder="Insert your quiz" />
+        <QuizTextInput newQuiz onSave={this.handleSave.bind(this)} placeholder={placeholderArray} />
       </header>
     )
   }
 }
 
+const placeholderArray = ["subject?", "question?", "answer?", "choice1?", "choice2"]
 HeaderQuiz.propTypes = {
   addQuiz: PropTypes.func.isRequired
 }

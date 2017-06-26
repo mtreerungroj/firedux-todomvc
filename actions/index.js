@@ -59,6 +59,7 @@ export function clearCompleted() {
 }
 
 export function addQuiz(quiz) {
+  console.log("Date = ", Date())
   return () => {
     firedux.push('Quests', {
       subject: quiz.subject,
@@ -66,12 +67,14 @@ export function addQuiz(quiz) {
       answers: [quiz.answer, quiz.choice1, quiz.choice2],
       owner: "5LrhuhQtqDfempxq8B9zGpqiiK42",
       skills: "es6",
-      point: "10",
-      createAt: new Date(),
-      lastEditAt: new Date(),
+      point: 10,
+      createAt: Date(),
+      lastEditAt: Date(),
     })
   }
 }
+
+
 
 // export function login(email, password) {
 //   return () => {
