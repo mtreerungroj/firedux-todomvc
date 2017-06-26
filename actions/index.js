@@ -1,4 +1,4 @@
-import firedux from '../store/firedux'
+import firedux, { firebaseApp } from '../store/firedux'
 
 export function addTodo(text) {
   return () => {
@@ -57,3 +57,65 @@ export function clearCompleted() {
     })
   }
 }
+
+export function addQuiz(quiz) {
+  return () => {
+    firedux.push('Quests', {
+      subject: quiz.subject,
+      question: quiz.question,
+      answers: [quiz.answer, quiz.choice1, quiz.choice2],
+      owner: "5LrhuhQtqDfempxq8B9zGpqiiK42",
+      skills: "es6",
+      point: "10",
+      createAt: new Date(),
+      lastEditAt: new Date(),
+    })
+  }
+}
+
+// export function login(email, password) {
+//   return () => {
+//     console.log("login start")
+//     let credentials = {
+//       email: email,
+//       password: password,
+//       token: "tttttttooooookkkkkkkeeeeeeeennnnnnnn"
+//     }
+//     console.log("credentials=", credentials)
+//     firedux.login(credentials)
+//       .then((authData) => {
+//         console.log("authData: ", authData)
+//       })
+//       .catch((error) => {
+//         console.log("error: ", error)
+//       })
+//     console.log("success ")
+//   }
+// }
+
+// export function login(prov) {
+//   return (dispatch, getState) => {
+//     console.log("firedux = ", firedux)
+//     let provider
+//     switch (prov) {
+//       case 'facebook':
+//         provider = new firedux.auth.FacebookAuthProvider();
+//         break;
+//       default:
+//         provider = null;
+//         break;
+//     }
+//     firedux.auth().signInWithPopup(provider).then(function (authData) {
+//       // localStorage.setItem('FIREBASE_TOKEN', (authData.credential.accessToken || authData.user.refreshToken))
+//       // that.authData = authData
+//       // dispatch({ type: 'FIREBASE_LOGIN', error: null, authData: authData.user })
+//       // resolve(authData)
+//       let uid = authData.user.uid
+//       firedux.push(`users`, {
+//         uid: uid
+//       })
+
+//       console.log("authData = ", authData)
+//     })
+//   }
+// }

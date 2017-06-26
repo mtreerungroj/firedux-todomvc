@@ -2,7 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Header from '../components/Header'
+import HeaderQuiz from '../components/HeaderQuiz'
 import MainSection from '../components/MainSection'
+import LoginSection from '../components/LoginSection'
 import * as TodoActions from '../actions'
 
 class App extends Component {
@@ -10,12 +12,13 @@ class App extends Component {
     const { todos, actions, firedux } = this.props
     return (
       <div>
-        <Header addTodo={actions.addTodo} />
-        <MainSection todos={todos} actions={actions} firedux={firedux} />
+        <HeaderQuiz addQuiz={actions.addQuiz} />
       </div>
     )
   }
 }
+// <Header addTodo={actions.addTodo} />
+// <MainSection todos={todos} actions={actions} firedux={firedux} />
 
 App.propTypes = {
   actions: PropTypes.object.isRequired,
@@ -27,6 +30,7 @@ function mapStateToProps(state) {
     firedux: state.firedux
   }
 }
+
 
 function mapDispatchToProps(dispatch) {
   return {
