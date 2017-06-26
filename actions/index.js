@@ -68,8 +68,22 @@ export function addQuiz(quiz) {
       owner: "5LrhuhQtqDfempxq8B9zGpqiiK42",
       skills: "es6",
       point: 10,
-      createAt: Date(),
-      lastEditAt: Date(),
+      createdAt: Date(),
+      updatedAt: Date(),
+    })
+  }
+}
+
+export function deleteQuiz(id) {
+  return () => {
+    firedux.remove(`Quests/${id}`)
+  }
+}
+
+export function editQuiz(id, quiz) {
+  return () => {
+    firedux.update(`Quests/${id}`, {
+      quiz
     })
   }
 }

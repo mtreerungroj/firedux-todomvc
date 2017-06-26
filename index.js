@@ -7,7 +7,8 @@ import store from './store'
 import 'todomvc-app-css/index.css'
 import firedux from './store/firedux'
 
-firedux.watch('todos')
+firedux.watch('Quests')
+firedux.init()
 
 render(
   <Provider store={store}>

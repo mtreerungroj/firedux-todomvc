@@ -4,19 +4,26 @@ import classnames from 'classnames'
 class TodoTextInput extends Component {
   constructor(props, context) {
     super(props, context)
-    this.state = {
-      // subject: this.props.quiz.subject || '',
-      // question: this.props.quiz.question || '',
-      // answer: this.props.quiz.answer || '',
-      // choice1: this.props.quiz.choice1 || '',
-      // choice2: this.props.quiz.choice2 || '',
-      subject: '',
-      question: '',
-      answer: '',
-      choice1: '',
-      choice2: '',
+
+    if (this.props.quiz != undefined) {
+      this.state = {
+        subject: this.props.quiz.subject || '',
+        question: this.props.quiz.question || '',
+        answer: this.props.quiz.answer || '',
+        choice1: this.props.quiz.choice1 || '',
+        choice2: this.props.quiz.choice2 || '',
+      }
+    } else {
+        this.state = {
+          subject: '',
+          question: '',
+          answer: '',
+          choice1: '',
+          choice2: '',
+        }
     }
   }
+
 
   handleSubmit(e) {
     const quiz = {
@@ -46,6 +53,13 @@ class TodoTextInput extends Component {
 
   handleBlur(e) {
     if (!this.props.newQuiz) {
+      const quiz = {
+        subject: this.state.subject,
+        question: this.state.question,
+        answer: this.state.answer,
+        choice1: this.state.choice1,
+        choice2: this.state.choice2,
+      }
       this.props.onSave(e.target.value)
     }
   }
@@ -61,7 +75,7 @@ class TodoTextInput extends Component {
           })}
           type="text"
           name="subject"
-          placeholder={this.props.placeholder[0]}
+          placeholder={this.props.placeholder != undefined ? this.props.placeholder[0] : ''}
           autoFocus="true"
           value={this.state.subject}
           onBlur={this.handleBlur.bind(this)}
@@ -75,7 +89,7 @@ class TodoTextInput extends Component {
           })}
           type="text"
           name="question"
-          placeholder={this.props.placeholder[1]}
+          placeholder={this.props.placeholder != undefined ? this.props.placeholder[1] : ''}
           autoFocus="true"
           value={this.state.question}
           onBlur={this.handleBlur.bind(this)}
@@ -89,7 +103,7 @@ class TodoTextInput extends Component {
           })}
           type="text"
           name="answer"
-          placeholder={this.props.placeholder[2]}
+          placeholder={this.props.placeholder != undefined ? this.props.placeholder[2] : ''}
           autoFocus="true"
           value={this.state.answer}
           onBlur={this.handleBlur.bind(this)}
@@ -103,7 +117,7 @@ class TodoTextInput extends Component {
           })}
           type="text"
           name="choice1"
-          placeholder={this.props.placeholder[3]}
+          placeholder={this.props.placeholder != undefined ? this.props.placeholder[3] : ''}
           autoFocus="true"
           value={this.state.choice1}
           onBlur={this.handleBlur.bind(this)}
@@ -117,12 +131,12 @@ class TodoTextInput extends Component {
           })}
           type="text"
           name="choice2"
-          placeholder={this.props.placeholder[4]}
+          placeholder={this.props.placeholder != undefined ? this.props.placeholder[4] : ''}
           autoFocus="true"
           value={this.state.choice2}
-          onBlur={this.handleBlur.bind(this)}
-          onChange={this.handleChange.bind(this)}
-          onKeyDown={this.handleSubmit.bind(this)} />
+        onBlur={this.handleBlur.bind(this)}
+        onChange={this.handleChange.bind(this)}
+        onKeyDown={this.handleSubmit.bind(this)} />
       </div>
     )
   }
@@ -130,7 +144,7 @@ class TodoTextInput extends Component {
 
 TodoTextInput.propTypes = {
   onSave: PropTypes.func.isRequired,
-  // quiz: PropTypes.object,
+  quest: PropTypes.object,
   placeholder: PropTypes.array,
   editing: PropTypes.bool,
   newQuiz: PropTypes.bool

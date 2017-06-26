@@ -4,15 +4,18 @@ import { connect } from 'react-redux'
 import Header from '../components/Header'
 import HeaderQuiz from '../components/HeaderQuiz'
 import MainSection from '../components/MainSection'
+import MainSectionQuiz from '../components/MainSectionQuiz'
 import LoginSection from '../components/LoginSection'
 import * as TodoActions from '../actions'
 
 class App extends Component {
   render() {
-    const { todos, actions, firedux } = this.props
+    const { actions, firedux } = this.props
     return (
       <div>
         <HeaderQuiz addQuiz={actions.addQuiz} />
+        Your Questions:
+        <MainSectionQuiz actions={actions} firedux={firedux} />
       </div>
     )
   }
