@@ -16,11 +16,7 @@ class QuizItem extends Component {
   }
 
   handleSave(id, quiz) {
-    // if (text.length === 0) {
-    //   this.props.deleteQuiz(id)
-    // } else {
     this.props.editQuiz(id, quiz)
-    // }
     console.log("set editing: false")
     this.setState({ editing: false })
   }

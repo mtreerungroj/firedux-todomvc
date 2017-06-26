@@ -59,7 +59,6 @@ export function clearCompleted() {
 }
 
 export function addQuiz(quiz) {
-  console.log("Date = ", Date())
   return () => {
     firedux.push('Quests', {
       subject: quiz.subject,
@@ -83,10 +82,14 @@ export function deleteQuiz(id) {
 export function editQuiz(id, quiz) {
   return () => {
     firedux.update(`Quests/${id}`, {
-      quiz
+      subject: quiz.subject,
+      question: quiz.question,
+      answers: [quiz.answer, quiz.choice1, quiz.choice2],
+      updatedAt: Date(),
     })
   }
 }
+
 
 
 
