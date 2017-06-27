@@ -6,27 +6,28 @@ class QuizTextInput extends Component {
     super(props, context)
     let quest;
     if(props.quest != undefined) {
+    // console.log("val=", props.quest.val())
       quest = {
         subject: props.quest.subject,
         question: props.quest.question,
-        answer: props.quest.choices['answer'],
-        choice1: props.quest.choices['choice1'],
-        choice2: props.quest.choices['choice2'],
+        choice_0: props.quest.choices[0],
+        choice_1: props.quest.choices[1],
+        choice_2: props.quest.choices[2],
       }
     } else { quest = {} }
 
     this.state = {
       subject: quest.subject || '',
       question: quest.question || '',
-      answer: quest.answer || '',
-      choice1: quest.choice1 || '',
-      choice2: quest.choice2 || '',
+      choice_0: quest.choice_0 || '',
+      choice_1: quest.choice_1 || '',
+      choice_2: quest.choice_2 || '',
       isEditing: {
         subject: false,
         question: false,
-        answer: false,
-        choice1: false,
-        choice2: false
+        choice_0: false,
+        choice_1: false,
+        choice_2: false
       }
     }
   }
@@ -35,21 +36,21 @@ class QuizTextInput extends Component {
     const quiz = {
       subject: this.state.subject,
       question: this.state.question,
-      answer: this.state.answer,
-      choice1: this.state.choice1,
-      choice2: this.state.choice2,
+      choice_0: this.state.choice_0,
+      choice_1: this.state.choice_1,
+      choice_2: this.state.choice_2,
     }
     // if (e.which === 13) {
-      this.props.onSave(quiz)
-      if (this.props.newQuiz) {
-        this.setState({
-          subject: '',
-          question: '',
-          answer: '',
-          choice1: '',
-          choice2: '',
-        })
-      }
+    this.props.onSave(quiz)
+    if (this.props.newQuiz) {
+      this.setState({
+        subject: '',
+        question: '',
+        choice_0: '',
+        choice_1: '',
+        choice_2: '',
+      })
+    }
     // }
   }
 
@@ -63,9 +64,12 @@ class QuizTextInput extends Component {
 
   handleBlur(form) {
     if (!this.props.newQuiz) {
-      let quiz = { [form]: this.state[form] }
+      let keys = form.split('_')
+      let quiz = (keys[0] === 'choice') ? { [keys[1]] : this.state[form] } : { [form]: this.state[form] }
+      
       let isAnswer = false
-      if (form == 'answer' || form == 'choice1' || form == 'choice2') isAnswer = true
+      if (form == 'choice_0' || form == 'choice_1' || form == 'choice_2') isAnswer = true
+      
       this.props.onSave(quiz, isAnswer)
       this.setState({ isEditing: { [form]: false } })
     }
@@ -116,9 +120,9 @@ class QuizTextInput extends Component {
       <div>
         {this.renderForm("subject")}
         {this.renderForm("question")}
-        {this.renderForm("answer")}
-        {this.renderForm("choice1")}
-        {this.renderForm("choice2")}
+        {this.renderForm("choice_0")}
+        {this.renderForm("choice_1")}
+        {this.renderForm("choice_2")}
         {this.props.newQuiz ? this.renderSubmitButton() : <br />}
       </div>
     )

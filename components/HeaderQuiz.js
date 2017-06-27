@@ -17,7 +17,7 @@ class HeaderQuiz extends Component {
   }
 }
 
-const placeholderArray = ["subject?", "question?", "answer?", "choice1?", "choice2"]
+const placeholderArray = ["subject?", "question?", "answer?", "choice_1?", "choice_2"]
 HeaderQuiz.propTypes = {
   addQuiz: PropTypes.func.isRequired
 }
