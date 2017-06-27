@@ -32,7 +32,6 @@ class QuizTextInput extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault()
     const quiz = {
       subject: this.state.subject,
       question: this.state.question,
@@ -102,14 +101,23 @@ class QuizTextInput extends Component {
     }
   }
 
+  renderSubmitButton() {
+    if (this.props.newQuiz) {
+      return (
+        <button onClick={() => this.handleSubmit()}>Submit</button>
+      )
+    }
+  }
+
   render() {
     return (
       <div>
-      {this.renderInput("subject")}
-      {this.renderInput("question")}
-      {this.renderInput("answer")}
-      {this.renderInput("choice1")}
-      {this.renderInput("choice2")}
+        { this.renderInput("subject") }
+        { this.renderInput("question") }
+        { this.renderInput("answer") }
+        { this.renderInput("choice1") }
+        { this.renderInput("choice2") }
+        { this.props.newQuiz ? this.renderSubmitButton() : <br /> }
       </div>
     )
   }
