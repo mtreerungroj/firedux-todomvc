@@ -10,40 +10,17 @@ class QuizItem extends Component {
     }
   }
 
-  handleDoubleClick() {
-    console.log("set editing: true")
-    this.setState({ editing: true })
-  }
-
   handleSave(id, quiz) {
-    this.props.editQuiz(id, quiz)
-    console.log("set editing: false")
-    this.setState({ editing: false })
+    this.props.editQuiz(`${id}`, quiz)
+    // this.setState({ editing: false })
   }
 
   render() {
     const { quest, completeTodo, deleteQuiz } = this.props
-
-    let element
-    if (this.state.editing) {
-      element = (
-        <QuizTextInput quest={quest}
-          editing={this.state.editing}
-          onSave={(quiz) => this.handleSave(quest.id, quiz)} />
-      )
-    } else {
-      element = (
-        <div className="view">
-          <label onDoubleClick={this.handleDoubleClick.bind(this)}>
-            Subject: {quest.subject} <br />
-            Question: {quest.question} <br />
-            Answer: {quest.answers[0]} <br />
-          </label>
-          <button className="destroy"
-            onClick={() => deleteQuiz(quest.id)} />
-        </div>
-      )
-    }
+    let element = (
+    <QuizTextInput quest={quest}
+        onSave={(quiz) => this.handleSave(quest.id, quiz)} />
+    )
 
     return (
       <li className={classnames({

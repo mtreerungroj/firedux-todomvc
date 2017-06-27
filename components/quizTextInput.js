@@ -4,26 +4,34 @@ import classnames from 'classnames'
 class QuizTextInput extends Component {
   constructor(props, context) {
     super(props, context)
-    const quest = props.quest || {}
-    //   let [ans, choice1, choice2] = ["", "", ""]
-    // if (props.quest){
-    // [ans, choice1, choice2] = props.quest.answers || ["", "", ""]
-    // }
+    let quest;
+    if(props.quest != undefined) {
+      quest = {
+        subject: props.quest.subject,
+        question: props.quest.question,
+        answer: props.quest.answers[0],
+        choice1: props.quest.answers[1],
+        choice2: props.quest.answers[2],
+      }
+    } else { quest = {} }
 
     this.state = {
       subject: quest.subject || '',
       question: quest.question || '',
-      answer: quest.answers != undefined ? quest.answers[0] : '',
-      choice1: quest.answers != undefined ? quest.answers[1] : '',
-      choice2: quest.answers != undefined ? quest.answers[2] : '',
-      // answer: ans || '',
-      // choice1: choice1 || '',
-      // choice2: choice2 || '',
+      answer: quest.answer || '',
+      choice1: quest.choice1 || '',
+      choice2: quest.choice2 || '',
+      isEditing: {
+        subject: false,
+        question: false,
+        answer: false,
+        choice1: false,
+        choice2: false
+      }
     }
   }
 
   handleSubmit(e) {
-    console.log("handled submit")
     e.preventDefault()
     const quiz = {
       subject: this.state.subject,
@@ -50,96 +58,58 @@ class QuizTextInput extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  // handleBlur(e) {
-  //   if (!this.props.newQuiz) {
-  //     const quiz = {
-  //       subject: this.state.subject,
-  //       question: this.state.question,
-  //       answer: this.state.answer,
-  //       choice1: this.state.choice1,
-  //       choice2: this.state.choice2,
-  //     }
-  //     this.props.onSave(quiz)
-  //   }
-  // }
+  handleDoubleClick(form) {
+    this.setState({ isEditing: { [form]: true } })
+  }
+
+  handleBlur(form) {
+    if (!this.props.newQuiz) {
+      const quiz = { [form]: this.state[form] }
+      this.props.onSave(quiz)
+      this.setState({ isEditing: { [form]: false } })
+    }
+  }
+
+  renderInput(form) {
+    if (this.state.isEditing[form] || this.props.newQuiz) {
+      return (
+        <div>
+          {form}:
+          <input className={
+            classnames({
+              edit: this.props.editing,
+              'new-todo': this.props.newQuiz
+            })}
+            type="text"
+            name={form}
+            placeholder={form+"??"}
+            value={this.state[form]}
+            autoFocus="true"
+            onChange={this.handleChange.bind(this)}
+            onBlur={() => this.handleBlur(form)}
+          />
+        </div>
+      )
+    } else {
+      return (
+        <div className="view">
+          <label onDoubleClick={() => this.handleDoubleClick(form)}>
+            {form}: {this.state[form]}
+          </label>
+          <br />
+        </div>
+      )
+    }
+  }
 
   render() {
     return (
       <div>
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        Subject:
-        <input className={
-          classnames({
-            edit: this.props.editing,
-            'new-todo': this.props.newQuiz
-          })}
-          type="text"
-          name="subject"
-          placeholder={this.props.placeholder != undefined ? this.props.placeholder[0] : ''}
-          // autoFocus="true"
-          value={this.state.subject}
-          // onBlur={this.handleBlur.bind(this)}
-          onChange={this.handleChange.bind(this)} />
-
-        Question:
-        <input className={
-          classnames({
-            edit: this.props.editing,
-            'new-todo': this.props.newQuiz
-          })}
-          type="text"
-          name="question"
-          placeholder={this.props.placeholder != undefined ? this.props.placeholder[1] : ''}
-          // autoFocus="true"
-          value={this.state.question}
-          // onBlur={this.handleBlur.bind(this)}
-          onChange={this.handleChange.bind(this)} />
-
-        Answer:
-        <input className={
-          classnames({
-            edit: this.props.editing,
-            'new-todo': this.props.newQuiz
-          })}
-          type="text"
-          name="answer"
-          placeholder={this.props.placeholder != undefined ? this.props.placeholder[2] : ''}
-          // autoFocus="true"
-          value={this.state.answer}
-          // onBlur={this.handleBlur.bind(this)}
-          onChange={this.handleChange.bind(this)} />
-
-        Choice1:
-        <input className={
-          classnames({
-            edit: this.props.editing,
-            'new-todo': this.props.newQuiz
-          })}
-          type="text"
-          name="choice1"
-          placeholder={this.props.placeholder != undefined ? this.props.placeholder[3] : ''}
-          // autoFocus="true"
-          value={this.state.choice1}
-          // onBlur={this.handleBlur.bind(this)}
-          onChange={this.handleChange.bind(this)} />
-
-        Choice2:
-        <input className={
-          classnames({
-            edit: this.props.editing,
-            'new-todo': this.props.newQuiz
-          })}
-          type="text"
-          name="choice2"
-          placeholder={this.props.placeholder != undefined ? this.props.placeholder[4] : ''}
-          // autoFocus="true"
-          value={this.state.choice2}
-          // onBlur={this.handleBlur.bind(this)}
-          onChange={this.handleChange.bind(this)}
-          // onKeyDown={this.handleSubmit.bind(this)} 
-          />
-          <button>Submit</button>
-        </form>
+      {this.renderInput("subject")}
+      {this.renderInput("question")}
+      {this.renderInput("answer")}
+      {this.renderInput("choice1")}
+      {this.renderInput("choice2")}
       </div>
     )
   }
