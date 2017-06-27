@@ -30,6 +30,7 @@ class MainSectionQuiz extends Component {
     const { actions } = this.props
     var { Quests } = this.props.firedux.data
     var quests = firebaseToArray(Quests)
+
     if (quests.length > 0) {
       return (
         <input className="toggle-all"
@@ -62,6 +63,9 @@ class MainSectionQuiz extends Component {
     const { filter } = this.state
     var { Quests } = this.props.firedux.data
     var quests = firebaseToArray(Quests)
+
+    quests.sort(function (a, b) { return (b.updatedAt > a.updatedAt) ? 1 : ((a.updatedAt > b.updatedAt) ? -1 : 0); }) 
+
 
     const filteredQuizzes = quests.filter(QUIZ_FILTERS[filter])
     const completedCount = quests.reduce((count, quest) =>
