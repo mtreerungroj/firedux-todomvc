@@ -63,7 +63,11 @@ export function addQuiz(quiz) {
     firedux.push('Quests', {
       subject: quiz.subject,
       question: quiz.question,
-      answers: [quiz.answer, quiz.choice1, quiz.choice2],
+      answers: {
+        answer: quiz.answer,
+        choice1: quiz.choice1,
+        choice2: quiz.choice2
+      },
       owner: "5LrhuhQtqDfempxq8B9zGpqiiK42",
       skills: "es6",
       point: 10,

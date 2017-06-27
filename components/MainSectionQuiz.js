@@ -66,7 +66,6 @@ class MainSectionQuiz extends Component {
 
     quests.sort(function (a, b) { return (b.updatedAt > a.updatedAt) ? 1 : ((a.updatedAt > b.updatedAt) ? -1 : 0); }) 
 
-
     const filteredQuizzes = quests.filter(QUIZ_FILTERS[filter])
     const completedCount = quests.reduce((count, quest) =>
       quest.completed ? count + 1 : count,

@@ -9,9 +9,9 @@ class QuizTextInput extends Component {
       quest = {
         subject: props.quest.subject,
         question: props.quest.question,
-        answer: props.quest.answers[0],
-        choice1: props.quest.answers[1],
-        choice2: props.quest.answers[2],
+        answer: props.quest.answers['answer'],
+        choice1: props.quest.answers['choice1'],
+        choice2: props.quest.answers['choice2'],
       }
     } else { quest = {} }
 
