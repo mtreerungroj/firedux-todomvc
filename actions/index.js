@@ -63,7 +63,7 @@ export function addQuiz(quiz) {
     firedux.push('Quests', {
       subject: quiz.subject,
       question: quiz.question,
-      answers: {
+      choices: {
         answer: quiz.answer,
         choice1: quiz.choice1,
         choice2: quiz.choice2
@@ -86,7 +86,7 @@ export function deleteQuiz(id) {
 export function editQuiz(id, quiz, isAnswer) {
   return () => {
     if (isAnswer) {
-      firedux.update(`Quests/${id}/answers`, quiz)
+      firedux.update(`Quests/${id}/choices`, quiz)
     } else {
       firedux.update(`Quests/${id}`, quiz)
     }

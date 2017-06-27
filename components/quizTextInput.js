@@ -9,9 +9,9 @@ class QuizTextInput extends Component {
       quest = {
         subject: props.quest.subject,
         question: props.quest.question,
-        answer: props.quest.answers['answer'],
-        choice1: props.quest.answers['choice1'],
-        choice2: props.quest.answers['choice2'],
+        answer: props.quest.choices['answer'],
+        choice1: props.quest.choices['choice1'],
+        choice2: props.quest.choices['choice2'],
       }
     } else { quest = {} }
 
@@ -71,7 +71,7 @@ class QuizTextInput extends Component {
     }
   }
 
-  renderInput(form) {
+  renderForm(form) {
     if (this.state.isEditing[form] || this.props.newQuiz) {
       return (
         <div>
@@ -114,12 +114,12 @@ class QuizTextInput extends Component {
   render() {
     return (
       <div>
-        { this.renderInput("subject") }
-        { this.renderInput("question") }
-        { this.renderInput("answer") }
-        { this.renderInput("choice1") }
-        { this.renderInput("choice2") }
-        { this.props.newQuiz ? this.renderSubmitButton() : <br /> }
+        {this.renderForm("subject")}
+        {this.renderForm("question")}
+        {this.renderForm("answer")}
+        {this.renderForm("choice1")}
+        {this.renderForm("choice2")}
+        {this.props.newQuiz ? this.renderSubmitButton() : <br />}
       </div>
     )
   }
