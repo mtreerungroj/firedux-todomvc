@@ -63,8 +63,10 @@ class QuizTextInput extends Component {
 
   handleBlur(form) {
     if (!this.props.newQuiz) {
-      const quiz = { [form]: this.state[form] }
-      this.props.onSave(quiz)
+      let quiz = { [form]: this.state[form] }
+      let isAnswer = false
+      if (form == 'answer' || form == 'choice1' || form == 'choice2') isAnswer = true
+      this.props.onSave(quiz, isAnswer)
       this.setState({ isEditing: { [form]: false } })
     }
   }

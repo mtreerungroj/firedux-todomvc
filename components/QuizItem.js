@@ -10,8 +10,8 @@ class QuizItem extends Component {
     }
   }
 
-  handleSave(id, quiz) {
-    this.props.editQuiz(`${id}`, quiz)
+  handleSave(id, quiz, isAnswer) {
+      this.props.editQuiz(`${id}`, quiz, isAnswer)
     // this.setState({ editing: false })
   }
 
@@ -20,7 +20,7 @@ class QuizItem extends Component {
     let element = (
       <div>
       <QuizTextInput quest={quest}
-        onSave={(quiz) => this.handleSave(quest.id, quiz)} />
+        onSave={(quiz, isAnswer) => this.handleSave(quest.id, quiz, isAnswer)} />
       <button className="destroy"
         onClick={() => deleteQuiz(quest.id)} />
       </div>

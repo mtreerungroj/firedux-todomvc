@@ -79,9 +79,13 @@ export function deleteQuiz(id) {
   }
 }
 
-export function editQuiz(id, quiz) {
+export function editQuiz(id, quiz, isAnswer) {
   return () => {
-    firedux.update(`Quests/${id}`, quiz)
+    if (isAnswer) {
+      firedux.update(`Quests/${id}/answers`, quiz)
+    } else {
+      firedux.update(`Quests/${id}`, quiz)
+    }
     firedux.update(`Quests/${id}`, {
       updatedAt: Date()
     })
