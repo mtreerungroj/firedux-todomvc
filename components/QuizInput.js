@@ -1,20 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 
-class QuizTextInput extends Component {
+class QuizInput extends Component {
   constructor(props, context) {
     super(props, context)
-    let quest;
-    if(props.quest != undefined) {
-    // console.log("val=", props.quest.val())
-      quest = {
-        subject: props.quest.subject,
-        question: props.quest.question,
-        choice_0: props.quest.choices[0],
-        choice_1: props.quest.choices[1],
-        choice_2: props.quest.choices[2],
-      }
-    } else { quest = {} }
+    let quest = (props.quest != undefined) ? {
+      subject: props.quest.subject,
+      question: props.quest.question,
+      choice_0: props.quest.choices[0],
+      choice_1: props.quest.choices[1],
+      choice_2: props.quest.choices[2],
+    } : {}
 
     this.state = {
       subject: quest.subject || '',
@@ -40,7 +36,6 @@ class QuizTextInput extends Component {
       choice_1: this.state.choice_1,
       choice_2: this.state.choice_2,
     }
-    // if (e.which === 13) {
     this.props.onSave(quiz)
     if (this.props.newQuiz) {
       this.setState({
@@ -51,7 +46,6 @@ class QuizTextInput extends Component {
         choice_2: '',
       })
     }
-    // }
   }
 
   handleChange(e) {
@@ -65,12 +59,9 @@ class QuizTextInput extends Component {
   handleBlur(form) {
     if (!this.props.newQuiz) {
       let keys = form.split('_')
-      let quiz = (keys[0] === 'choice') ? { [keys[1]] : this.state[form] } : { [form]: this.state[form] }
-      
-      let isAnswer = false
-      if (form == 'choice_0' || form == 'choice_1' || form == 'choice_2') isAnswer = true
-      
-      this.props.onSave(quiz, isAnswer)
+      let quiz = (keys[0] === 'choice') ? { [keys[1]]: this.state[form] } : { [form]: this.state[form] }
+      let isChoice = (keys[0] === 'choice') ? true : false
+      this.props.onSave(quiz, isChoice)
       this.setState({ isEditing: { [form]: false } })
     }
   }
@@ -82,12 +73,12 @@ class QuizTextInput extends Component {
           {form}:
           <input className={
             classnames({
-              edit: this.props.editing,
-              'new-todo': this.props.newQuiz
+              // edit: this.props.editing,
+              'new-todo': this.props.newQuiz || this.state.isEditing[form]
             })}
             type="text"
             name={form}
-            placeholder={form+"??"}
+            placeholder={form + "??"}
             value={this.state[form]}
             autoFocus="true"
             onChange={this.handleChange.bind(this)}
@@ -109,9 +100,7 @@ class QuizTextInput extends Component {
 
   renderSubmitButton() {
     if (this.props.newQuiz) {
-      return (
-        <button onClick={() => this.handleSubmit()}>Submit</button>
-      )
+      return (<button onClick={() => this.handleSubmit()}>Submit</button>)
     }
   }
 
@@ -129,12 +118,11 @@ class QuizTextInput extends Component {
   }
 }
 
-QuizTextInput.propTypes = {
+QuizInput.propTypes = {
   onSave: PropTypes.func.isRequired,
   quest: PropTypes.object,
-  placeholder: PropTypes.array,
-  editing: PropTypes.bool,
+  // editing: PropTypes.bool,
   newQuiz: PropTypes.bool
 }
 
-export default QuizTextInput
+export default QuizInput

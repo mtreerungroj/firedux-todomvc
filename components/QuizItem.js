@@ -1,36 +1,29 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import QuizTextInput from './QuizTextInput'
+import QuizInput from './QuizInput'
 
 class QuizItem extends Component {
   constructor(props, context) {
     super(props, context)
-    this.state = {
-      editing: false
-    }
   }
 
   handleSave(id, quiz, isAnswer) {
-      this.props.editQuiz(`${id}`, quiz, isAnswer)
-    // this.setState({ editing: false })
+    this.props.editQuiz(`${id}`, quiz, isAnswer)
   }
 
   render() {
     const { quest, completeTodo, deleteQuiz } = this.props
     let element = (
       <div>
-      <QuizTextInput quest={quest}
-        onSave={(quiz, isAnswer) => this.handleSave(quest.id, quiz, isAnswer)} />
-      <button className="destroy"
-        onClick={() => deleteQuiz(quest.id)} />
+        <QuizInput quest={quest}
+          onSave={(quiz, isAnswer) => this.handleSave(quest.id, quiz, isAnswer)} />
+        <button className="destroy"
+          onClick={() => deleteQuiz(quest.id)} />
       </div>
     )
 
     return (
-      <li className={classnames({
-        completed: quest.completed,
-        editing: this.state.editing
-      })}>
+      <li className={classnames({ completed: quest.completed })}>
         {element}
       </li>
     )

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import QuizTextInput from './QuizTextInput'
+import QuizInput from './QuizInput'
 import store from '../store'
 
 class HeaderQuiz extends Component {
@@ -11,13 +11,12 @@ class HeaderQuiz extends Component {
     return (
       <header className="header">
         <h1>Quiz Chatbot</h1>
-        <QuizTextInput newQuiz onSave={this.handleSave.bind(this)} placeholder={placeholderArray} />
+        <QuizInput newQuiz onSave={this.handleSave.bind(this)} />
       </header>
     )
   }
 }
 
-const placeholderArray = ["subject?", "question?", "answer?", "choice_1?", "choice_2"]
 HeaderQuiz.propTypes = {
   addQuiz: PropTypes.func.isRequired
 }
