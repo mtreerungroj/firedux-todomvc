@@ -8,9 +8,8 @@ import 'todomvc-app-css/index.css'
 import firedux from './store/firedux'
 
 firedux.watch('Quests')
-firedux.init().catch(err => {
-  err && console.log(err)
-})
+firedux.watch('Developer')
+firedux.init().catch(err => { err && console.log(err) })
 
 render(
   <Provider store={store}>
