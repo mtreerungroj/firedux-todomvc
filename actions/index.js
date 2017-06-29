@@ -1,4 +1,41 @@
 import firedux, { firebaseApp } from '../store/firedux'
+import * as types from '../constants/ActionTypes'
+
+export function addQuiz(quiz) {
+  return () => {
+    firedux.push('Quests', {
+      subject: quiz.subject,
+      question: quiz.question,
+      choices: [quiz.choice_0, quiz.choice_1, quiz.choice_2],
+      owner: "5LrhuhQtqDfempxq8B9zGpqiiK42",
+      skills: "es6",
+      point: 10,
+      createdAt: Date(),
+      updatedAt: Date(),
+    })
+  }
+}
+
+export function deleteQuiz(id) {
+  return () => {
+    firedux.remove(`Quests/${id}`)
+  }
+}
+
+export function editQuiz(id, quiz, isChoice) {
+  return () => {
+    isChoice ? firedux.update(`Quests/${id}/choices`, quiz) : firedux.update(`Quests/${id}`, quiz)
+    firedux.update(`Quests/${id}`, { updatedAt: Date() })
+  }
+}
+
+
+export const login = () => ({ type: types.LOGIN })
+
+
+
+
+
 
 export function addTodo(text) {
   return () => {
@@ -58,33 +95,8 @@ export function clearCompleted() {
   }
 }
 
-export function addQuiz(quiz) {
-  return () => {
-    firedux.push('Quests', {
-      subject: quiz.subject,
-      question: quiz.question,
-      choices: [quiz.choice_0, quiz.choice_1, quiz.choice_2],
-      owner: "5LrhuhQtqDfempxq8B9zGpqiiK42",
-      skills: "es6",
-      point: 10,
-      createdAt: Date(),
-      updatedAt: Date(),
-    })
-  }
-}
 
-export function deleteQuiz(id) {
-  return () => {
-    firedux.remove(`Quests/${id}`)
-  }
-}
 
-export function editQuiz(id, quiz, isChoice) {
-  return () => {
-    isChoice ? firedux.update(`Quests/${id}/choices`, quiz) : firedux.update(`Quests/${id}`, quiz)
-    firedux.update(`Quests/${id}`, { updatedAt: Date() })
-  }
-}
 
 
 
