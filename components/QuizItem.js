@@ -15,9 +15,11 @@ class QuizItem extends Component {
     const { quest, completeTodo, deleteQuiz } = this.props
     let element = (
       <div>
-        <QuizInput quest={quest}
+        <QuizInput
+          quest={quest}
           onSave={(quiz, isAnswer) => this.handleSave(quest.id, quiz, isAnswer)} />
-        <button className="destroy"
+        <button
+          className="destroy"
           onClick={() => deleteQuiz(quest.id)} />
       </div>
     )
