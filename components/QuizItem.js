@@ -7,8 +7,8 @@ class QuizItem extends Component {
     super(props, context)
   }
 
-  handleSave(id, quiz, isAnswer) {
-    this.props.editQuiz(`${id}`, quiz, isAnswer)
+  handleSave(id, quiz, isChoice) {
+    this.props.editQuiz(`${id}`, quiz, isChoice)
   }
 
   render() {
@@ -17,7 +17,7 @@ class QuizItem extends Component {
       <div>
         <QuizInput
           quest={quest}
-          onSave={(quiz, isAnswer) => this.handleSave(quest.id, quiz, isAnswer)} />
+          onSave={(quiz, isChoice) => this.handleSave(quest.id, quiz, isChoice)} />
         <button
           className="destroy"
           onClick={() => deleteQuiz(quest.id)} />

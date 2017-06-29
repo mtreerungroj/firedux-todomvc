@@ -60,7 +60,7 @@ class Leaderboard extends Component {
           developers.map((developer, idx) =>
             <h2 key={idx + 1}>
               {idx + 1}. {developer.profile.first_name} {developer.maxSummary.grade} ( score: {developer.maxSummary.score} )
-      </h2>
+            </h2>
           )}
       </div>
     )
