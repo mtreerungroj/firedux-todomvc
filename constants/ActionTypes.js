@@ -6,3 +6,4 @@ export const COMPLETE_ALL = 'COMPLETE_ALL'
 export const CLEAR_COMPLETED = 'CLEAR_COMPLETED'
 
 export const LOGIN = 'LOGIN'
+export const VALIDATE_USER = 'VALIDATE_USER'
