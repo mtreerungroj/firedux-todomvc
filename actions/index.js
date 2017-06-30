@@ -17,9 +17,7 @@ export function addQuiz(quiz) {
 }
 
 export function deleteQuiz(id) {
-  return () => {
-    firedux.remove(`Quests/${id}`)
-  }
+  return () => { firedux.remove(`Quests/${id}`) }
 }
 
 export function editQuiz(id, quiz, isChoice) {
@@ -31,11 +29,19 @@ export function editQuiz(id, quiz, isChoice) {
 
 export function login() {
   return () => {
-    firedux.login();
+    return new Promise((resolve, reject) => {
+      firedux.login().then(res => resolve(res))
+    })
   }
 }
-// export const loginWithFacebook = () => ({ type: types.LOGIN_WITH_FACEBOOK })
-// export const validateUser = () => ({ type: types.VALIDATE_USER })
+
+export function logout() {
+  return () => {
+    return new Promise((resolve, reject) => {
+      firedux.logout().then(res => resolve(res))
+    })
+  }
+}
 
 
 

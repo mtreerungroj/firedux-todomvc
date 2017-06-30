@@ -107,12 +107,9 @@ export default class Firedux {
           case 'FIREBASE_LOGOUT_ERROR':
             return {
               authData: action.authData,
-              authError: action.error
+              authError: action.error,
+              data: state.data
             }
-          // return updeep({
-          // authData: action.authData,
-          // authError: action.error
-          // }, state)
           default:
             return state
         }
@@ -167,7 +164,6 @@ export default class Firedux {
     })
   }
   login() {
-    console.log("login!!!!")
     const { dispatch } = this
     const that = this
     return new Promise((resolve, reject) => {
@@ -180,11 +176,7 @@ export default class Firedux {
       }
 
       const handler = function (error, authData) {
-        // TODO: Error handling.
-        // debug('FB AUTH', error, authData)
-
         if (error) return handleError(error)
-        console.log("authData=", authData)
         // localStorage.setItem('FIREBASE_TOKEN', (authData.token || authData.refreshToken))
         that.authData = authData
         dispatch({ type: 'FIREBASE_LOGIN', authData: authData, error: error })
@@ -192,35 +184,13 @@ export default class Firedux {
       }
 
       try {
-        // if (!credentials) {
-        //   reject(new Error('no credentials'))
-        //   return
-        // }
         if (this.v3) {
-          // if (!credentials.email) {
-          //   reject(new Error('credentials missing email'))
-          //   return
-          // }
-          // if (!credentials.password) {
-          //   reject(new Error('credentials missing password'))
-          //   return
-          // }
-          // TODO add custom later...
           var provider = new this.auth.FacebookAuthProvider();
           this.auth()
             .signInWithPopup(provider)
             .then(authData => handler(null, authData))
             .catch(error => handleError(error))
-          // this.auth()
-          //   .signInWithEmailAndPassword(credentials.email, credentials.password)
-          //   .then(authData => handler(null, authData))
-          //   .catch(error => handleError(error))
         }
-        // else if (credentials.token) {
-        //   this.ref.authWithCustomToken(this.token, handler)
-        // } else {
-        //   this.ref.authWithPassword(credentials, handler)
-        // }
       } catch (error) {
         console.error('FB AUTH ERROR', error)
         dispatch({ type: 'FIREBASE_LOGIN_ERROR', error })
@@ -235,9 +205,7 @@ export default class Firedux {
       dispatch({ type: 'FIREBASE_LOGOUT_ATTEMPT' })
 
       const handleLogout = function () {
-        this.authData = null
-        this.authError = null
-        dispatch({ type: 'FIREBASE_LOGOUT' })
+        dispatch({ type: 'FIREBASE_LOGOUT', authData: null, error: null })
         resolve()
       }
 
@@ -250,9 +218,6 @@ export default class Firedux {
       if (this.v3) {
         this.auth().signOut()
           .then(handleLogout, handleLogoutError)
-      } else {
-        this.ref.unauth() // no callbacks for old firebase :(
-        handleLogout()
       }
     })
   }
