@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import QuizItem from './QuizItem'
 import FooterQuiz from './FooterQuiz'
-import { firebaseToArray } from '../utils'
-import store from '../store'
+import { firebaseToArray } from '../../utils'
+import store from '../../store'
 
 class MainSectionQuiz extends Component {
   constructor(props, context) {

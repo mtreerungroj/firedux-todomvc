@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import QuizInput from './QuizInput'
-import store from '../store'
+import store from '../../store'
 
 class HeaderQuiz extends Component {
   handleSave(quiz) {
