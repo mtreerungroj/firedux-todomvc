@@ -44,14 +44,15 @@ class Leaderboard extends Component {
   }
 
   render() {
-    this.getDevelopers().then(devs => {
-      developers = []
-      devs.map(developer => { this.setDeveloperData(developer) })
-    }).then(() => {
-      this.sortByScore(developers)
-    }).then(() => {
-      if (this.state.isLoading) this.toggleIsLoading()
-    })
+    if (this.props.firedux.data)
+      this.getDevelopers().then(devs => {
+        developers = []
+        devs.map(developer => { this.setDeveloperData(developer) })
+      }).then(() => {
+        this.sortByScore(developers)
+      }).then(() => {
+        if (this.state.isLoading) this.toggleIsLoading()
+      })
 
     return this.state.isLoading ? (<div>Loading...</div>) : (
       <div>
