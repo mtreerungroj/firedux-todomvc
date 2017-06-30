@@ -1,7 +1,7 @@
-import Firedux from 'firedux'
+import Firedux from '../libs/firedux'
 import firebase from 'firebase'
 
-const firebaseApp = firebase.initializeApp({
+export const firebaseApp = firebase.initializeApp({
   apiKey: "AIzaSyA3iSHbBSRBMGCvxsmHzQWG296s0j0vcCo",
   authDomain: "quizchatbot-ce222.firebaseapp.com",
   databaseURL: 'https://quizchatbot-ce222.firebaseio.com'
