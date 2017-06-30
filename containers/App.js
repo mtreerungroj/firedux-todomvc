@@ -4,10 +4,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as QuizActions from '../actions'
 import { AUTH } from '../constants/enum.js'
-
 import Leaderboard from '../components/Leaderboard'
-import HeaderQuiz from '../components/HeaderQuiz'
-import MainSectionQuiz from '../components/MainSectionQuiz'
+import MyQuiz from '../components/protected/MyQuiz'
 
 class App extends Component {
   constructor() {
@@ -33,7 +31,7 @@ class App extends Component {
   render() {
     const { actions, firedux } = this.props
     return (
-      <BrowserRouter >
+      <BrowserRouter>
         <div>
           <Link to="/">Leaderboard</Link><br />
           {
@@ -51,7 +49,7 @@ class App extends Component {
             <Route exact path="/"
               component={(props) => <Leaderboard firedux={firedux} {...props} />} />
             <Route exact path="/myQuiz"
-              component={(props) => <Leaderboard firedux={firedux} {...props} />} />
+              component={(props) => <MyQuiz firedux={firedux} actions={actions} {...props} />} />
             <Route render={() => <h3>No Match</h3>} />
           </Switch>
         </div>
