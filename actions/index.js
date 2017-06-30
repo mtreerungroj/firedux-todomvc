@@ -30,7 +30,9 @@ export function editQuiz(id, quiz, isChoice) {
 export function login() {
   return () => {
     return new Promise((resolve, reject) => {
-      firedux.login().then(res => resolve(res))
+      firedux.login().then(res => {
+        resolve(res)
+      })
     })
   }
 }
@@ -43,7 +45,13 @@ export function logout() {
   }
 }
 
-
+export function init() {
+  return () => {
+    return new Promise((resolve, reject) => {
+      firedux.init().then(res => resolve(res))
+    })
+  }
+}
 
 
 

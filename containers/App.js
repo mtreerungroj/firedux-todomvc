@@ -16,6 +16,12 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.actions.init().then(res => {
+      if (res) this.setState({ authed: true })
+    })
+  }
+
   handleLogin() {
     this.props.actions.login().then(res => {
       if (res) this.setState({ authed: true })

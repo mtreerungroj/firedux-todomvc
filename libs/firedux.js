@@ -105,11 +105,12 @@ export default class Firedux {
           case 'FIREBASE_LOGIN_ERROR':
           case 'FIREBASE_LOGOUT':
           case 'FIREBASE_LOGOUT_ERROR':
-            return {
-              authData: action.authData,
-              authError: action.error,
-              data: state.data
-            }
+          case 'FIREBASE_VALIDATE_USER':
+          console.log("action=", action)
+            return Object.assign({}, state, {
+              uid: action.uid,
+              authError: action.error
+            })
           default:
             return state
         }
@@ -123,44 +124,43 @@ export default class Firedux {
   }
   init() {
     const { dispatch } = this
-    const that = this
+    // const that = this
     return new Promise((resolve, reject) => {
-      this.token = localStorage.getItem('FIREBASE_TOKEN')
-      if (this.token) {
-        resolve(this.login(dispatch, {
-          token: this.token
-        }))
-      }
-
       if (this.v3) {
         const auth = this.auth()
-
         auth.onAuthStateChanged(user => {
           if (user) {
-            this.userAuth = user
+            // let authData = {
+            //   credential: {
+            //     provider: "facebook.com",
+            //     providerId: "facebook.com"
+            //   },
+            //   operationType: "signIn",
+            //   user: user
+            // }
+            // console.log("authData=", authData)
+            dispatch({ type: 'FIREBASE_VALIDATE_USER', uid: user.uid, authError: null })
             resolve(user)
-          } else {
-            localStorage.removeItem('FIREBASE_TOKEN')
-            that.authData = null
-            dispatch({ type: 'FIREBASE_LOGOUT' })
-            reject(new Error('FIREBASE_LOGOUT'))
           }
+          // else {
+          //   dispatch({ type: 'FIREBASE_VALIDATE_USER', authData: null, authError: null })
+          //   reject(new Error('FIREBASE_LOGOUT'))
+          // }
         })
       }
 
+      // console.log("after this.v3")
+
       // listen for auth changes
-      if (isFunction(this.ref.onAuth)) {
-        this.ref.onAuth(function (authData) {
-          // debug('FB AUTH DATA', authData)
-          if (!authData) {
-            localStorage.removeItem('FIREBASE_TOKEN')
-            that.authData = null
-            dispatch({ type: 'FIREBASE_LOGOUT' })
-            reject(new Error('FIREBASE_LOGOUT'))
-          }
-          resolve(authData)
-        })
-      }
+      // if (isFunction(this.ref.onAuth)) {
+      //   this.ref.onAuth(function (authData) {
+      //     if (!authData) {
+      //       dispatch({ type: 'FIREBASE_VALIDATE_USER', authData: null, authError: null })
+      //       reject(new Error('FIREBASE_LOGOUT'))
+      //     }
+      //     resolve(authData)
+      //   })
+      // }
     })
   }
   login() {
@@ -179,7 +179,8 @@ export default class Firedux {
         if (error) return handleError(error)
         // localStorage.setItem('FIREBASE_TOKEN', (authData.token || authData.refreshToken))
         that.authData = authData
-        dispatch({ type: 'FIREBASE_LOGIN', authData: authData, error: error })
+        console.log(authData.user.uid)
+        dispatch({ type: 'FIREBASE_LOGIN', uid: authData.user.uid, error })
         resolve(authData)
       }
 
@@ -205,7 +206,7 @@ export default class Firedux {
       dispatch({ type: 'FIREBASE_LOGOUT_ATTEMPT' })
 
       const handleLogout = function () {
-        dispatch({ type: 'FIREBASE_LOGOUT', authData: null, error: null })
+        dispatch({ type: 'FIREBASE_LOGOUT', uid: null, error: null })
         resolve()
       }
 
