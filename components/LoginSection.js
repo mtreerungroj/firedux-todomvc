@@ -1,48 +1,38 @@
-import React, { PropTypes, Component } from 'react'
-import store from '../store'
+// import React, { Component, PropTypes } from 'react'
+// import { connect } from 'react-redux'
+// import { firebaseConnect, isLoaded, isEmpty, pathToJS } from 'react-redux-firebase'
 
-class LoginSection extends Component {
-  handleSubmit(e) {
-    e.preventDefault()
-    console.log("handleSubmit")
-    this.props.login(this.email.value, this.password.value)
-    // .then((authData) => {
-    //   console.log("authData: ", authData)
-    // })
-    // .catch((error) => {
-    //   console.log("error: ", error)
-    // })
-  }
+// // UserIsNotAuthenticated // redirect to list page if logged in
+// firebaseConnect() // add this.props.firebase
+// connect( // map redux state to props
+//   ({ firebase }) => ({
+//     authError: pathToJS(firebase, 'authError')
+//   })
+// )
+// class LoginSection extends Component {
 
-  render() {
-    return (
-      <div>
-        <h2> Login </h2>
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <div >
-            <label>Email</label>
-            <input
-              placeholder="Email"
-              ref={(email) => this.email = email}
-            />
-          </div>
-          <div >
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="Password"
-              ref={(password) => this.password = password}
-            />
-          </div>
-          <button type="submit">Login</button>
-        </form>
-      </div>
-    )
-  }
-}
+//   // handleLogin(loginData) {
+//   // return this.props.firebase.login(loginData)
+//   // }
 
-LoginSection.propTypes = {
-  login: PropTypes.func.isRequired
-}
+//   providerLogin(provider) {
+//     this.handleLogin({ provider })
+//   }
+//   // <button onClick={() => this.providerLogin('google')}>Login with Facebook</button>
 
-export default LoginSection
+//   render() {
+//     return (
+//       <div>
+//         Login Me
+//       </div>
+//     )
+//   }
+// }
+
+// LoginSection.propTypes = {
+//   firebase: PropTypes.shape({
+//     login: PropTypes.func.isRequired
+//   })
+// }
+
+// export default LoginSection

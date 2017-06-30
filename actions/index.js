@@ -29,8 +29,13 @@ export function editQuiz(id, quiz, isChoice) {
   }
 }
 
-
-export const login = () => ({ type: types.LOGIN })
+export function login() {
+  return () => {
+    firedux.login();
+  }
+}
+// export const loginWithFacebook = () => ({ type: types.LOGIN_WITH_FACEBOOK })
+// export const validateUser = () => ({ type: types.VALIDATE_USER })
 
 
 

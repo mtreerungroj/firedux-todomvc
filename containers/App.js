@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+// import LoginSection from '../components/LoginSection'
 import Leaderboard from '../components/Leaderboard'
 import HeaderQuiz from '../components/HeaderQuiz'
 import MainSectionQuiz from '../components/MainSectionQuiz'
@@ -11,8 +12,16 @@ class App extends Component {
     const { actions, firedux } = this.props
     return (
       <div>
+        Login Section -------------------------------
+        <br />
+        <button onClick={actions.login}>Login with FB</button>
+        <br /><br />
+
+        Leaderboard Section -------------------------------
         <Leaderboard firedux={firedux} />
         <br /><br />
+
+        Quiz Section -------------------------------
         <HeaderQuiz addQuiz={actions.addQuiz} />
         Your Questions:
         <MainSectionQuiz actions={actions} firedux={firedux} />

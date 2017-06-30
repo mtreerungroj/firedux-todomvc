@@ -5,5 +5,6 @@ export const COMPLETE_TODO = 'COMPLETE_TODO'
 export const COMPLETE_ALL = 'COMPLETE_ALL'
 export const CLEAR_COMPLETED = 'CLEAR_COMPLETED'
 
-export const LOGIN = 'LOGIN'
-export const VALIDATE_USER = 'VALIDATE_USER'
+// export const LOGIN_WITH_FACEBOOK = 'LOGIN_WITH_FACEBOOK'
+// export const VALIDATE_USER = 'VALIDATE_USER' = 'LOGIN_WITH_FACEBOOK'
+// export const VALIDATE_USER = 'VAL
