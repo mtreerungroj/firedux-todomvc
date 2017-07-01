@@ -30,6 +30,7 @@
     "react-redux-firebase": "^1.4.3",
     "react-router-dom": "^4.1.1",
     "redux": "^3.2.1",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.0.1",
     "updeep": "^1.0.0"
   },
