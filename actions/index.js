@@ -80,13 +80,18 @@ function getDevelopers(data) {
 function setDeveloperData(developers, developer) {
   if (developer.summary) {
     let arraySummary = developer.summary;
-    let maxScore = Math.max.apply(Math, arraySummary.map(summary => { return summary.score }))
-    let maxSummary = arraySummary.find(summary => { return summary.score == maxScore; })
-    developers.push({
-      id: developer.id,
-      profile: developer.profile,
-      maxSummary: maxSummary
-    })
+    if (!(arraySummary[arraySummary.length - 1].isDone)) {
+      arraySummary.splice(arraySummary.length - 1, 1)
+    }
+    if (arraySummary.length) {
+      let maxScore = Math.max.apply(Math, arraySummary.map(summary => { return summary.score }))
+      let maxSummary = arraySummary.find(summary => { return summary.score == maxScore; })
+      developers.push({
+        id: developer.id,
+        profile: developer.profile,
+        maxSummary: maxSummary
+      })
+    }
   }
 }
 

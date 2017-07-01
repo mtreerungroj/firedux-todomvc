@@ -106,7 +106,6 @@ export default class Firedux {
           case 'FIREBASE_LOGOUT':
           case 'FIREBASE_LOGOUT_ERROR':
           case 'FIREBASE_VALIDATE_USER':
-          console.log("action=", action)
             return Object.assign({}, state, {
               uid: action.uid,
               authError: action.error
