@@ -12,7 +12,6 @@ firedux.watch('Quests')
 firedux.watch('Developer').then(() => {
   store.dispatch(Actions.getDeveloper())
 })
-// firedux.init().catch(err => { err && console.log(err) })
 
 render(
   <Provider store={store}>
