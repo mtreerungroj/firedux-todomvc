@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
+// import logger from 'redux-logger'
 import rootReducer from '../reducers'
 import firedux from './firedux'
 
@@ -8,7 +9,8 @@ export default function configureStore(initialState) {
   //   // thunk
   // )(createStore)(rootReducer, initialState)
   const store = createStore(rootReducer, initialState, applyMiddleware(
-    thunk
+    thunk,
+    // logger
   ))
 
   firedux.dispatch = store.dispatch

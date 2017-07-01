@@ -1,5 +1,6 @@
 import firedux, { firebaseApp } from '../store/firedux'
 import * as types from '../constants/ActionTypes'
+import { firebaseToArray } from '../utils'
 
 export function addQuiz(quiz) {
   return () => {
@@ -28,31 +29,66 @@ export function editQuiz(id, quiz, isChoice) {
 }
 
 export function login() {
-  return () => {
-    return new Promise((resolve, reject) => {
-      firedux.login().then(res => {
-        resolve(res)
-      })
+  return (dispatch) => {
+    firedux.login().then(res => {
+      dispatch({ type: 'auth/complete' })
     })
   }
 }
 
 export function logout() {
-  return () => {
-    return new Promise((resolve, reject) => {
-      firedux.logout().then(res => resolve(res))
+  return (dispatch) => {
+    firedux.logout().then(res => {
+      dispatch({ type: 'auth/fail' })
     })
   }
 }
 
 export function init() {
-  return () => {
-    return new Promise((resolve, reject) => {
-      firedux.init().then(res => resolve(res))
+  return (dispatch) => {
+    firedux.init().then(res => {
+      if (res) {
+        dispatch({ type: 'auth/complete' })
+      }
     })
   }
 }
 
+export function getDeveloper() {
+  return (dispatch, getState) => {
+    const state = getState()
+    let developers = []
+    getDevelopers(state.firedux.data).then(devs => {
+      developers = []
+      devs.map(developer => { setDeveloperData(developers, developer) })
+    }).then(() => {
+      developers.sort((a, b) => { return b.maxSummary.score - a.maxSummary.score });
+    }).then(() => {
+      dispatch({ type: 'developer/set-developer-data', data: developers })
+    })
+  }
+}
+
+function getDevelopers(data) {
+  return new Promise((resolve, reject) => {
+    const { Developer } = data
+    const developers = firebaseToArray(Developer)
+    if (developers.length) resolve(developers)
+  })
+}
+
+function setDeveloperData(developers, developer) {
+  if (developer.summary) {
+    let arraySummary = developer.summary;
+    let maxScore = Math.max.apply(Math, arraySummary.map(summary => { return summary.score }))
+    let maxSummary = arraySummary.find(summary => { return summary.score == maxScore; })
+    developers.push({
+      id: developer.id,
+      profile: developer.profile,
+      maxSummary: maxSummary
+    })
+  }
+}
 
 
 

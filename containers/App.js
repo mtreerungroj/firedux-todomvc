@@ -2,82 +2,51 @@ import React, { Component, PropTypes } from 'react'
 import { BrowserRouter, Route, Link, Redirect, Switch } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Leaderboard from './Leaderboard.container'
+import Menubar from './Menubar.container'
+import MyQuiz from './MyQuiz.container'
+import Page404 from './404.container'
 import * as QuizActions from '../actions'
-import { AUTH } from '../constants/enum.js'
-import Leaderboard from '../components/Leaderboard'
-import MyQuiz from '../components/protected/MyQuiz'
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      authed: false,
-      authState: AUTH.CHECKING,
-    }
+    this.handleLogin = this.handleLogin.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   componentDidMount() {
-    this.props.actions.init().then(res => {
-      if (res) this.setState({ authed: true })
-    })
+    this.props.actions.init()
   }
 
   handleLogin() {
-    this.props.actions.login().then(res => {
-      if (res) this.setState({ authed: true })
-    })
+    this.props.actions.login()
   }
 
   handleLogout() {
-    this.props.actions.logout().then(res => {
-      if (res == undefined) this.setState({ authed: false })
-    })
+    this.props.actions.logout()
   }
 
   render() {
-    const { actions, firedux } = this.props
     return (
       <BrowserRouter>
         <div>
-          <Link to="/">Leaderboard</Link><br />
-          {
-            !this.state.authed ? (
-              <button onClick={() => this.handleLogin()}>Login with Facebook</button>
-            ) : (
-                <div>
-                  <span> name: {this.props.firedux.authData && this.props.firedux.authData.user.displayName} </span><br />
-                  <Link to="/myQuiz">My Quiz</Link><br />
-                  <button onClick={() => this.handleLogout()}>Logout</button>
-                </div>
-              )
-          }
+          <Menubar onLoginClick={this.handleLogin} onLogoutClick={this.handleLogout} />
           <Switch>
             <Route exact path="/"
-              component={(props) => <Leaderboard firedux={firedux} {...props} />} />
+              component={(props) => <Leaderboard {...props} />} />
             <Route exact path="/myQuiz"
-              component={(props) => <MyQuiz firedux={firedux} actions={actions} {...props} />} />
-            <Route render={() => <h3>No Match</h3>} />
+              component={(props) => <MyQuiz {...props} />} />
+            <Route render={() => <Page404 />} />
           </Switch>
         </div>
-      </BrowserRouter >
+      </BrowserRouter>
     );
   }
 }
-
-App.propTypes = {
-  actions: PropTypes.object.isRequired,
-  firedux: PropTypes.object.isRequired
-}
-
-function mapStateToProps(state) {
-  return { firedux: state.firedux }
-}
-
-function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(QuizActions, dispatch) }
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  null,
+  (dispatch) => {
+    return { actions: bindActionCreators(QuizActions, dispatch) }
+  }
 )(App)
